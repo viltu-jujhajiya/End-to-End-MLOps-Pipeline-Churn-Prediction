@@ -1,0 +1,6 @@
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+test_data_size : 0.2
+data_relative_path : "../data/raw/Telco-Customer-Churn.csv"
+train_data_relative_path : "../data/raw/train.csv"
+test_data_relative_path : "../data/raw/test.csv"
+processed_train_relative_path : "../data/processed/train_processed.csv"
