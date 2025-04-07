@@ -1,14 +1,15 @@
 import pandas as pd
 import os
-import yaml
 from sklearn.preprocessing import OneHotEncoder
 
-def data_preprocessing(relative_path, processed_data_relative_path):
+onehotencoder = OneHotEncoder(sparse_output=False)
+
+def data_preprocessing(input_relative_path, output_relative_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    datapath = os.path.join(script_dir, relative_path)
+    datapath = os.path.join(script_dir, input_relative_path)
+
     data = pd.read_csv(datapath)
     processed_data = pd.DataFrame()
-    onehotencoder = OneHotEncoder(sparse_output=False)
 
     processed_data["gender"] = data["gender"].map({'Male': 1, 'Female' : 0})
     processed_data["SeniorCitizen"] = data['SeniorCitizen'].copy()
@@ -34,13 +35,10 @@ def data_preprocessing(relative_path, processed_data_relative_path):
     processed_data["TotalCharges"] = pd.to_numeric(data["TotalCharges"], errors="coerce")
     processed_data["Churn"] = data["Churn"].map({'Yes': 1, 'No': 0})
 
-    processed_data.to_csv()
+    processed_data.to_csv(os.path.join(script_dir, output_relative_path), index=False)
 
 
+# with open("param.yaml", "r") as file:
+#     config = yaml.safe_load(file)
 
-
-with open("param.yaml", "r") as file:
-    config = yaml.safe_load(file)
-
-processed_data = data_preprocessing(config["train_data_relative_path"])
-print(processed_data.head())
+# data_preprocessing(config["train_data_relative_path"], config["processed_train_relative_path"])

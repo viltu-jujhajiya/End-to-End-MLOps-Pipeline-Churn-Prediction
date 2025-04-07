@@ -10,10 +10,13 @@ with open("param.yaml", "r") as file:
 
 def main():
     data_relative_path = config["data_relative_path"]
+    test_data_size = config["test_data_size"]
     train_data_relative_path = config["train_data_relative_path"]
     test_data_relative_path = config["test_data_relative_path"]
     processed_train_relative_path = config["processed_train_relative_path"]
-    
+
+    data_preparation(data_relative_path, test_data_size, train_data_relative_path, test_data_relative_path)
+    data_preprocessing(train_data_relative_path, processed_train_relative_path)
 
 
 if __name__ == "__main__":
