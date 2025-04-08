@@ -36,7 +36,7 @@ def main():
 
     # '''Evaluating model'''
     results = eval(model_path, test_datapath)
-    # print(results)
+    print(results)
 
 
 if __name__ == "__main__":
