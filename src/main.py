@@ -7,7 +7,8 @@ from model_training import model_training
 from model_eval import model_eval
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(script_dir, "..", "param.yaml"), "r", encoding='utf-8') as file:
+with open(os.path.join(script_dir, "..", "param.yaml"),
+          "r", encoding='utf-8') as file:
     config = yaml.safe_load(file)
 
 
