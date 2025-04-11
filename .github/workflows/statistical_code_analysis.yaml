@@ -27,4 +27,4 @@ jobs:
 
           - name: Run pylint (Code Quality Check)
             run: |
-              pylint src -name "*.py" | xargs pylint
+              find src -name "*.py" | xargs pylint
