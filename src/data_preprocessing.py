@@ -6,7 +6,7 @@ from sklearn.preprocessing import OneHotEncoder
 onehotencoder = OneHotEncoder(sparse_output=False)
 
 
-def data_preprocessing(datapath):
+def data_preprocessing(datapath: str) -> pd.DataFrame:
     '''datapath: Complete path of the data to be processed'''
     data = pd.read_csv(datapath)
     processed_data = pd.DataFrame()

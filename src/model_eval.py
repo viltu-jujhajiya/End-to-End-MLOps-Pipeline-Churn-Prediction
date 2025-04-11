@@ -4,7 +4,8 @@ from sklearn.metrics import accuracy_score
 from data_preprocessing import data_preprocessing
 
 
-def model_eval(model_path, test_datapath):
+def model_eval(model_path: str,
+               test_datapath: str) -> dict:
     '''model_path: complete path where model is stored
     test_datapath: complete path of the data to be tested'''
 

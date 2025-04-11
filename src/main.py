@@ -12,7 +12,7 @@ with open(os.path.join(script_dir, "..", "param.yaml"),
     config = yaml.safe_load(file)
 
 
-def main():
+def main() -> None:
     '''Main function'''
     data_relative_path = config["data_relative_path"]
     test_data_size = config["test_data_size"]

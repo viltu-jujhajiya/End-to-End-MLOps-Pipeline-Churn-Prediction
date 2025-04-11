@@ -12,7 +12,8 @@ model = RandomForestClassifier(
     )
 
 
-def model_training(input_data_relative_path, model_path):
+def model_training(input_data_relative_path: str,
+                   model_path: str) -> None:
     '''input_data_relative_path: relative path of the training data
     model_path: complete path where trained model should be saved'''
     script_dir = os.path.dirname(os.path.abspath(__file__))

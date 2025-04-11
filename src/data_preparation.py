@@ -3,7 +3,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def data_preparation(datapath, test_size, train_datapath, test_datapath):
+def data_preparation(datapath: str,
+                     test_size: str,
+                     train_datapath: str,
+                     test_datapath: str) -> None:
     '''datapath: complete datapath for raw data
     test_size: test data size after spliting
     train_datapath: complete path where training data should be stored
