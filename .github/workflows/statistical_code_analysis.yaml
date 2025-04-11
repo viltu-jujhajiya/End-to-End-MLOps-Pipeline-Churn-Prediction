@@ -4,7 +4,7 @@ on: push
 
 
 jobs:
-    Statistical_code_analysis:
+    Statistical_Code_Analysis:
         runs-on: ubuntu-latest
 
         steps:
