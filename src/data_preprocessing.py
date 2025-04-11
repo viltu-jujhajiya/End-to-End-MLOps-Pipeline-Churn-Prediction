@@ -1,3 +1,4 @@
+'''Data processing unit for Churn Prediction project'''
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 
@@ -6,7 +7,7 @@ onehotencoder = OneHotEncoder(sparse_output=False)
 
 
 def data_preprocessing(datapath):
-
+    '''datapath: Complete path of the data to be processed'''
     data = pd.read_csv(datapath)
     processed_data = pd.DataFrame()
 
@@ -48,11 +49,11 @@ def data_preprocessing(datapath):
                                                    errors="coerce")
     processed_data["Churn"] = data["Churn"].map({'Yes': 1, 'No': 0})
 
-    '''Dropping NULL values'''
+    # Dropping NULL values
     processed_data.dropna(axis=0, inplace=True)
 
-    '''Remove ['gender', 'PhoneService']
-    due to their negligible affect on target variable'''
+    # Remove ['gender', 'PhoneService'
+    # due to their negligible affect on target variable
     # processed_data.drop(['gender', 'PhoneService'], axis=1, inplace=True)
 
     return processed_data

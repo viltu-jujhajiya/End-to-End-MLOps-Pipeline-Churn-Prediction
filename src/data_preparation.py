@@ -1,8 +1,13 @@
+'''Py file to prepare data for Churn Prediction project'''
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
 def data_preparation(datapath, test_size, train_datapath, test_datapath):
+    '''datapath: complete datapath for raw data
+    test_size: test data size after spliting
+    train_datapath: complete path where training data should be stored
+    test_datapath: complete path where test data should be stored'''
     data = pd.read_csv(datapath)
     train, test = train_test_split(data, test_size=test_size, random_state=42)
     # print(train.shape, test.shape)

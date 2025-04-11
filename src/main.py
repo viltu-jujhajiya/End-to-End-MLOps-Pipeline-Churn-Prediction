@@ -1,16 +1,18 @@
+'''main file of Churn Prediction project'''
 import os
 import yaml
 from data_preparation import data_preparation
 from data_preprocessing import data_preprocessing
 from model_training import model_training
-from model_eval import eval
+from model_eval import model_eval
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(script_dir, "..", "param.yaml"), "r") as file:
+with open(os.path.join(script_dir, "..", "param.yaml"), "r", encoding='utf-8') as file:
     config = yaml.safe_load(file)
 
 
 def main():
+    '''Main function'''
     data_relative_path = config["data_relative_path"]
     test_data_size = config["test_data_size"]
     train_data_relative_path = config["train_data_relative_path"]
@@ -24,19 +26,19 @@ def main():
                                             processed_train_relative_path)
     model_path = os.path.join(script_dir, model_relative_path)
 
-    '''Preparing Data'''
+    # Preparing Data
     data_preparation(datapath, test_data_size, train_datapath, test_datapath)
 
-    '''Processing Data'''
+    # Processing Data
     processed_data = data_preprocessing(datapath)
     processed_data.to_csv(processed_train_datapath, index=False)
 
-    '''Fitting model on processed training data'''
+    # Fitting model on processed training data
     model_training(processed_train_relative_path, model_path)
 
-    # '''Evaluating model'''
-    results = eval(model_path, test_datapath)
-    print(results)
+    # Evaluating model
+    results = model_eval(model_path, test_datapath)
+    # print(results)
 
 
 if __name__ == "__main__":

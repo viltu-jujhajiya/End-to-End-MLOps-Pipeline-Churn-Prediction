@@ -1,3 +1,5 @@
+'''Setup Configuration for the Churn Prediction Project.'''
+
 from setuptools import find_packages, setup
 
 setup(
