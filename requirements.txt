@@ -9,5 +9,5 @@ scikit-learn==1.6.1
 scipy==1.15.2
 seaborn==0.13.2
 bandit==1.8.3
-pip install pandas-stubs
-pip install types-PyYAML
+pandas-stubs
+types-PyYAML
