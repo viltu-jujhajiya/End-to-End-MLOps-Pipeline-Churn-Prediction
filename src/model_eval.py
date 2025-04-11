@@ -1,11 +1,11 @@
-import os
 import pickle
 from data_preprocessing import data_preprocessing
 from sklearn.metrics import accuracy_score
 
+
 def eval(model_path, test_datapath):
 
-    results = {'accuracy_score' : 0.0}
+    results = {'accuracy_score': 0.0}
     with open(model_path, "rb") as file:
         model = pickle.load(file)
 
