@@ -1,5 +1,5 @@
 '''model testing file for Churn Prediction before deployment'''
-import pickle
+import joblib
 from sklearn.metrics import accuracy_score
 from data_preprocessing import data_preprocessing
 
@@ -11,7 +11,7 @@ def model_eval(model_path: str,
 
     results = {'accuracy_score': 0.0}
     with open(model_path, "rb") as file:
-        model = pickle.load(file)
+        model = joblib.load(file)
 
     processed_test_data = data_preprocessing(test_datapath)
     x_test = processed_test_data.drop(['Churn'], axis=1, inplace=False)

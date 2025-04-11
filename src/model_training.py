@@ -1,6 +1,6 @@
 '''Classifier training for Churn Prediction project'''
 import os
-import pickle
+import joblib
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
@@ -24,4 +24,4 @@ def model_training(input_data_relative_path: str,
 
     model.fit(x_train, y_train)
     with open(model_path, 'wb') as file:
-        pickle.dump(model, file)
+        joblib.dump(model, file)
