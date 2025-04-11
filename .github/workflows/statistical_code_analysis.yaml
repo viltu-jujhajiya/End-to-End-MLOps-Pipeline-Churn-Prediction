@@ -4,7 +4,7 @@ on: push
 
 
 jobs:
-    lint:
+    Statistical_code_analysis:
         runs-on: ubuntu-latest
 
         steps:
@@ -27,4 +27,4 @@ jobs:
 
           - name: Run pylint (Code Quality Check)
             run: |
-              pylint $(git ls-files '.*py')
+              pylint src -name "*.py" | xargs pylint
