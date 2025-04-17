@@ -31,9 +31,7 @@ def root():
 
 @app.post("/predict")
 def predict(input_data: churn_input):
-
     result = predict_churn(input_data)
-    print(result)
     return result
 
 if __name__ == "__main__":

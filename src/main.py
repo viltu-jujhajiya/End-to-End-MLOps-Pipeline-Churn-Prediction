@@ -1,10 +1,12 @@
 '''main file of Churn Prediction project'''
 import os
+import numpy as np
 import pandas as pd
 import yaml
 import joblib
 from data_preparation import data_preparation
 from data_preprocessing import data_preprocessing
+from data_preprocessing_test import data_preprocessing_test
 from model_training import model_training
 from model_eval import model_eval
 
@@ -52,9 +54,12 @@ with open(model_path, "rb") as file:
 
 
 def predict_churn(input_data):
-    print("input data: ", input_data)
-    processed_data = data_preprocessing(input_data)
-    print("processed_data : ", processed_data)
-    result = model.predict(processed_data)
-    return result
-
+    try:
+        input_data = pd.DataFrame([input_data.dict()])
+        processed_data = data_preprocessing_test(input_data)
+        # processed_data = processed_data.values
+        result = model.predict(processed_data)
+        result = int(result)
+        return result
+    except Exception as e:
+        print(f"Exception: {e} in app (predict_churn).")

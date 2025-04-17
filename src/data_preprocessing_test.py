@@ -1,13 +1,6 @@
-'''Data processing unit for Churn Prediction project'''
 import pandas as pd
-from sklearn.preprocessing import OneHotEncoder
 
-
-onehotencoder = OneHotEncoder(sparse_output=False)
-
-
-def data_preprocessing(data: pd.DataFrame) -> pd.DataFrame:
-    '''datapath: Complete path of the data to be processed'''
+def data_preprocessing_test(data: pd.DataFrame) -> pd.DataFrame:
     try:
         processed_data = pd.DataFrame()
 
@@ -37,32 +30,21 @@ def data_preprocessing(data: pd.DataFrame) -> pd.DataFrame:
         processed_data["PaperlessBilling"] = data["PaperlessBilling"].map(
                         {'Yes': 1, 'No': 0})
 
-        enc_column = "PaymentMethod"
-        encoded_paymentmethod = onehotencoder.fit_transform(data[[enc_column]])
-        encoded_df = pd.DataFrame(
-            encoded_paymentmethod,
-            columns=onehotencoder.get_feature_names_out([enc_column]))
+        encoded_df = pd.DataFrame([{
+            'PaymentMethod_Bank transfer (automatic)': 0,
+            'PaymentMethod_Credit card (automatic)': 0,
+            'PaymentMethod_Electronic check': 0,
+            'PaymentMethod_Mailed check': 0}])
+        for c in encoded_df.columns:
+            if str(data["PaymentMethod"]) in c:
+                encoded_df[c] = 1
+                break
         processed_data = pd.concat([processed_data, encoded_df], axis=1)
 
         processed_data["MonthlyCharges"] = data["MonthlyCharges"].copy()
         processed_data["TotalCharges"] = pd.to_numeric(data["TotalCharges"],
                                                     errors="coerce")
-        try:
-            processed_data["Churn"] = data["Churn"].map({'Yes': 1, 'No': 0})
-        except:
-            pass
-
-        # Dropping NULL values
-        processed_data.dropna(axis=0, inplace=True)
-
-        # Remove ['gender', 'PhoneService'
-        # due to their negligible affect on target variable
-        # processed_data.drop(['gender', 'PhoneService'], axis=1, inplace=True)
 
         return processed_data
     except Exception as e:
-        print(f"Exception: {e} in data preprocessing.")
-
-
-# with open("param.yaml", "r") as file:
-#     config = yaml.safe_load(file)
+        print(f"Execption as {e} in data_preprocessing_test.py.")
