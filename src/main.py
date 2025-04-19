@@ -54,7 +54,10 @@ with open(model_path, "rb") as file:
 
 def predict_churn(input_data):
     try:
-        input_data = pd.DataFrame([input_data.dict()])
+        if isinstance(input_data, dict):
+            input_data = pd.DataFrame([input_data])
+        else:
+            input_data = pd.DataFrame([input_data.dict()])
         processed_data = data_preprocessing_test(input_data)
         # processed_data = processed_data.values
         result = model.predict(processed_data)

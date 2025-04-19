@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Churn Prediction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .form-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    select,
+    input {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      grid-column: 1 / -1;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .result-container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .result-container h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Churn Prediction Form</h2>
+    <form id="churn-form" action="/predict" method="post">
+      <!-- Wrap each label+input in a form-group -->
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="senior_citizen">Senior Citizen:</label>
+        <select id="senior_citizen" name="senior_citizen">
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="partner">Partner:</label>
+        <select id="partner" name="partner">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dependents">Dependents:</label>
+        <select id="dependents" name="dependents">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="tenure">Tenure (Months):</label>
+        <input type="number" id="tenure" name="tenure" min="0" required />
+      </div>
+
+      <div class="form-group">
+        <label for="phone_service">Phone Service:</label>
+        <select id="phone_service" name="phone_service">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="multiple_lines">Multiple Lines:</label>
+        <select id="multiple_lines" name="multiple_lines">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No phone service">No phone service</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="internet_service">Internet Service:</label>
+        <select id="internet_service" name="internet_service">
+          <option value="DSL">DSL</option>
+          <option value="Fiber optic">Fiber optic</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="online_security">Online Security:</label>
+        <select id="online_security" name="online_security">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="online_backup">Online Backup:</label>
+        <select id="online_backup" name="online_backup">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="device_protection">Device Protection:</label>
+        <select id="device_protection" name="device_protection">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="tech_support">Tech Support:</label>
+        <select id="tech_support" name="tech_support">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="streaming_tv">Streaming TV:</label>
+        <select id="streaming_tv" name="streaming_tv">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="streaming_movies">Streaming Movies:</label>
+        <select id="streaming_movies" name="streaming_movies">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="contract">Contract:</label>
+        <select id="contract" name="contract">
+          <option value="Month-to-month">Month-to-month</option>
+          <option value="One year">One year</option>
+          <option value="Two year">Two year</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="paperless_billing">Paperless Billing:</label>
+        <select id="paperless_billing" name="paperless_billing">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="payment_method">Payment Method:</label>
+        <select id="payment_method" name="payment_method">
+          <option value="Mailed check">Mailed check</option>
+          <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+          <option value="Credit card (automatic)">Credit card (automatic)</option>
+          <option value="Electronic check">Electronic check</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="monthly_charges">Monthly Charges:</label>
+        <input type="number" step="0.1" id="monthly_charges" name="monthly_charges" required />
+      </div>
+
+      <div class="form-group">
+        <label for="total_charges">Total Charges:</label>
+        <input type="number" step="0.1" id="total_charges" name="total_charges" required />
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="result-container">
+    <h3>Prediction Result:</h3>
+    <div id="result">{{ prediction }}</div>
+  </div>
+</body>
+</html>
