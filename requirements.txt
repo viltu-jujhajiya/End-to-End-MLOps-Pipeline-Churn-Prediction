@@ -15,6 +15,6 @@ mypy==1.15.0
 fastapi==0.115.12
 uvicorn==0.34.1
 python-multipart
+types-PyYAML
 # logging
 # pandas-stubs
-# types-PyYAML
