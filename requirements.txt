@@ -13,5 +13,6 @@ bandit==1.8.3
 mypy==1.15.0
 fastapi==0.115.12
 uvicorn==0.34.1
-pandas-stubs
-types-PyYAML
+# logging
+# pandas-stubs
+# types-PyYAML

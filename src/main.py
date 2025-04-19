@@ -1,6 +1,5 @@
 '''main file of Churn Prediction project'''
 import os
-import numpy as np
 import pandas as pd
 import yaml
 import joblib
