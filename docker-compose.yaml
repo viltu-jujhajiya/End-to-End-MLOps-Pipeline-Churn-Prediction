@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: churn-prediction-ui-app
+    ports:
+      - "1234:1234"
+    volumes:
+      - .:/app
+    command: python3 src/app.py
