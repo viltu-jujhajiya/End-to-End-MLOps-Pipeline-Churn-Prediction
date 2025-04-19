@@ -11,10 +11,11 @@ def data_preprocessing(data: pd.DataFrame) -> pd.DataFrame:
     try:
         processed_data = pd.DataFrame()
 
-        # processed_data["gender"] = data["gender"].map({'Male': 1, 'Female' : 0})
         processed_data["SeniorCitizen"] = data['SeniorCitizen']
-        processed_data["Partner"] = data["Partner"].map({'Yes': 1, 'No': 0})
-        processed_data["Dependents"] = data["Dependents"].map({'Yes': 1, 'No': 0})
+        processed_data["Partner"] = data["Partner"].map(
+                        {'Yes': 1, 'No': 0})
+        processed_data["Dependents"] = data["Dependents"].map(
+                        {'Yes': 1, 'No': 0})
         processed_data["tenure"] = data["tenure"]
         processed_data["MultipleLines"] = data["MultipleLines"].map(
                         {'Yes': 1, 'No': 0, 'No phone service': 0})
@@ -37,31 +38,49 @@ def data_preprocessing(data: pd.DataFrame) -> pd.DataFrame:
         processed_data["PaperlessBilling"] = data["PaperlessBilling"].map(
                         {'Yes': 1, 'No': 0})
 
-        enc_column = "PaymentMethod"
-        encoded_paymentmethod = onehotencoder.fit_transform(data[[enc_column]])
-        encoded_df = pd.DataFrame(
-            encoded_paymentmethod,
-            columns=onehotencoder.get_feature_names_out([enc_column]))
-        processed_data = pd.concat([processed_data, encoded_df], axis=1)
+        if "Churn" in data.columns:
+            enc_column = "PaymentMethod"
+            encoded_paymentmethod = onehotencoder.fit_transform(
+                                                    data[[enc_column]])
+            encoded_df = pd.DataFrame(
+                encoded_paymentmethod,
+                columns=onehotencoder.get_feature_names_out([enc_column]))
+            processed_data = pd.concat([processed_data, encoded_df], axis=1)
 
-        processed_data["MonthlyCharges"] = data["MonthlyCharges"].copy()
-        processed_data["TotalCharges"] = pd.to_numeric(data["TotalCharges"],
-                                                    errors="coerce")
-        try:
-            processed_data["Churn"] = data["Churn"].map({'Yes': 1, 'No': 0})
-        except:
-            pass
+            processed_data["MonthlyCharges"] = data["MonthlyCharges"].copy()
+            processed_data["TotalCharges"] = pd.to_numeric(
+                data["TotalCharges"],
+                errors="coerce")
+            processed_data["Churn"] = data["Churn"].map(
+                            {'Yes': 1, 'No': 0})
+            # Dropping NULL values
+            processed_data.dropna(axis=0, inplace=True)
 
-        # Dropping NULL values
-        processed_data.dropna(axis=0, inplace=True)
+        else:
+            encoded_df = pd.DataFrame([{
+                        'PaymentMethod_Bank transfer (automatic)': 0,
+                        'PaymentMethod_Credit card (automatic)': 0,
+                        'PaymentMethod_Electronic check': 0,
+                        'PaymentMethod_Mailed check': 0}])
+            for c in encoded_df.columns:
+                if str(data["PaymentMethod"]) in c:
+                    encoded_df[c] = 1
+                    break
+            processed_data = pd.concat([processed_data, encoded_df], axis=1)
+
+            processed_data["MonthlyCharges"] = data["MonthlyCharges"].copy()
+            processed_data["TotalCharges"] = pd.to_numeric(
+                                                data["TotalCharges"],
+                                                errors="coerce")
 
         # Remove ['gender', 'PhoneService'
         # due to their negligible affect on target variable
         # processed_data.drop(['gender', 'PhoneService'], axis=1, inplace=True)
 
         return processed_data
-    except Exception as e:
+    except (ValueError, TypeError) as e:
         print(f"Exception: {e} in data preprocessing.")
+        return pd.DataFrame()
 
 
 # with open("param.yaml", "r") as file:

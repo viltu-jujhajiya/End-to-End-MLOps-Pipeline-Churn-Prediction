@@ -1,4 +1,5 @@
 '''model testing file for Churn Prediction before deployment'''
+import pandas as pd
 import joblib
 from sklearn.metrics import accuracy_score
 from data_preprocessing import data_preprocessing
@@ -13,7 +14,8 @@ def model_eval(model_path: str,
     with open(model_path, "rb") as file:
         model = joblib.load(file)
 
-    processed_test_data = data_preprocessing(test_datapath)
+    test_data = pd.read_csv(test_datapath)
+    processed_test_data = data_preprocessing(test_data)
     x_test = processed_test_data.drop(['Churn'], axis=1, inplace=False)
     y_test = processed_test_data['Churn']
     y_preds = model.predict(x_test)
