@@ -1,4 +1,0 @@
-[core]
-    remote = myremote
-['remote "myremote"']
-    url = F:\!Projects-2\dvc_directory\dvc1
