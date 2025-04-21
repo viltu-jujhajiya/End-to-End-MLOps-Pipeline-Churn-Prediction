@@ -52,6 +52,7 @@ def main() -> None:
     results = model_eval(model_path, test_datapath)
     logger.info(results)
 
+
 model_relative_path = config["model_path"]
 model_path = os.path.join(script_dir, model_relative_path)
 if not os.path.exists(model_path):
