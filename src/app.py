@@ -6,9 +6,12 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from main import predict_churn
+from logger import logger
 
 app = FastAPI(title="Churn Prediction API")
 templates = Jinja2Templates(directory="src/templates")
+
+logger.info("Execution started.....")
 
 
 class ChurnInput(BaseModel):
@@ -41,12 +44,14 @@ class ChurnInput(BaseModel):
 @app.get("/", response_class=HTMLResponse)
 async def read_form(request: Request):
     '''Function to run .html file and build UI.'''
+    logger.info("Waiting for feature inputs")
     return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/predict")
 async def predict(request: Request):
     '''Function to get data'''
+    logger.info("Successfully got feature values")
     form_data = await request.form()
     input_data = {
         "gender": form_data.get('gender'),
@@ -69,6 +74,7 @@ async def predict(request: Request):
         "MonthlyCharges": float(str(form_data.get('monthly_charges'))),
         "TotalCharges": float(str(form_data.get('total_charges')))
         }
+    logger.info("Main prediction function called")
     result = predict_churn(input_data)
     prediction = f"Customer is likely to \
     {'leave (churn)' if result == 1 else 'stay'}."
@@ -84,6 +90,7 @@ def open_browser():
 
 
 if __name__ == "__main__":
+    logger.info("Opening browser!")
     threading.Timer(1.0, open_browser).start()
     import uvicorn
     uvicorn.run(app, host='0.0.0.0', port=1234)  # nosec

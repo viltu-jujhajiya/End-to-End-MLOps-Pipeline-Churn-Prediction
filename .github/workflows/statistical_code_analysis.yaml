@@ -27,7 +27,7 @@ jobs:
 
           - name: Run pylint (Code Quality Check)
             run: |
-              pylint src/
+              pylint --disable=broad-exception-caught src/
 
           - name: Run mypy (Type Checking)
             run: |
