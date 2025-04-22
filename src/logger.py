@@ -9,12 +9,11 @@ with open(os.path.join(script_dir, "..", "param.yaml"),
     config = yaml.safe_load(f)
 
 log_file_path = os.path.join(script_dir, config['log_file_path'])
+log_file_path = os.path.normpath(log_file_path)
+# print(log_file_path)
 
 if os.path.exists(log_file_path):
     os.remove(log_file_path)
-
-with open(log_file_path, 'a', encoding='utf-8') as lf:
-    lf.close()
 
 
 logging.basicConfig(
