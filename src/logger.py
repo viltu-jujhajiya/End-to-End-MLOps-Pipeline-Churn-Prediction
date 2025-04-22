@@ -12,6 +12,9 @@ log_file_path = os.path.join(script_dir, config['log_file_path'])
 log_file_path = os.path.normpath(log_file_path)
 # print(log_file_path)
 
+log_dir = os.path.dirname(log_file_path)
+os.makedirs(log_dir, exist_ok=True)
+
 if os.path.exists(log_file_path):
     os.remove(log_file_path)
 
