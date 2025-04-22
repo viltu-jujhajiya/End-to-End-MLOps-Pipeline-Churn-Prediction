@@ -14,6 +14,9 @@ log_file_path = os.path.join(log_dir_path, "app.log")
 if os.path.exists(log_file_path):
     os.remove(log_file_path)
 
+open('logs/app.log', 'a').close()
+
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
