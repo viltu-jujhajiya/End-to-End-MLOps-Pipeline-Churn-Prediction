@@ -8,8 +8,7 @@ with open(os.path.join(script_dir, "..", "param.yaml"),
           "r", encoding='utf-8') as f:
     config = yaml.safe_load(f)
 
-log_dir_path = os.path.join(script_dir, config['log_dir_path'])
-log_file_path = os.path.join(log_dir_path, "app.log")
+log_file_path = os.path.join(script_dir, config['log_file_path'])
 
 if os.path.exists(log_file_path):
     os.remove(log_file_path)
