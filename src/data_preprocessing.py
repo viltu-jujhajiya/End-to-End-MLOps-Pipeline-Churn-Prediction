@@ -1,7 +1,7 @@
 '''Data processing unit for Churn Prediction project'''
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
-
+from logger import logger
 
 onehotencoder = OneHotEncoder(sparse_output=False)
 
@@ -76,10 +76,10 @@ def data_preprocessing(data: pd.DataFrame) -> pd.DataFrame:
         # Remove ['gender', 'PhoneService'
         # due to their negligible affect on target variable
         # processed_data.drop(['gender', 'PhoneService'], axis=1, inplace=True)
-
+        logger.info("Data has been processed.")
         return processed_data
     except (ValueError, TypeError) as e:
-        print(f"Exception: {e} in data preprocessing.")
+        logger.info("Exception in data_preprocessing.py: %s.", e)
         return pd.DataFrame()
 
 

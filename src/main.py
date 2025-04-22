@@ -36,16 +36,14 @@ def main() -> None:
 
     # Processing Data
     data = pd.read_csv(datapath)
-    logger.info("Processing data.")
+    logger.info("Processing data...")
     processed_data = data_preprocessing(data.copy())
-    logger.info("Done processing data")
     processed_data.to_csv(processed_train_datapath, index=False)
-    logger.info("Saved processed data.")
+    logger.info("Processed data has been saved.")
 
     # Fitting model on processed training data
     logger.info("Started model training.")
     model_training(processed_train_relative_path, model_path)
-    logger.info("Model training done.")
 
     # Evaluating model
     logger.info("Testing model on test data.")
@@ -74,7 +72,6 @@ def predict_churn(input_data) -> Optional[int]:
 
         logger.info("Processing input data.")
         processed_data = data_preprocessing(input_data)
-        logger.info("Done processing input data.")
         # processed_data = processed_data.values
         logger.info("Predicting.....")
         result = model.predict(processed_data)

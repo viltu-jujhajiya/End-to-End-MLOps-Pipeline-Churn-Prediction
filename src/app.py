@@ -52,7 +52,6 @@ async def read_form(request: Request):
 async def predict(request: Request):
     '''Function to get data'''
     try:
-        uiuiu
         logger.info("Successfully got feature values")
         form_data = await request.form()
         input_data = {
