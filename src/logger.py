@@ -14,7 +14,8 @@ log_file_path = os.path.join(log_dir_path, "app.log")
 if os.path.exists(log_file_path):
     os.remove(log_file_path)
 
-open('logs/app.log', 'a').close()
+with open(log_file_path, 'a', encoding='utf-8') as lf:
+    lf.close()
 
 
 logging.basicConfig(
