@@ -11,7 +11,7 @@ Used Telco Customer Churn dataset publicly available on Kaggle ([Dataset Link](h
 
 ## Development
 
-## EDA
+### EDA
 - Used correlation matrix to check correlation between each variable and Churn (target variable) and it is analysed that 'tenure', 'internetService', 'Contract','PaymentMethod(Electronic_Check)' play major role in predicting if customer will leave.
 - For further analysis, used box plots to check affect of numerical columns like 'tenure', 'MonthlyCharges', 'TotalCharges' and tenure and monthly charges have big impact.
 - To check effect of categorical variable on target variable 'Chi-Square Test of Independence' is used, and two variables 'Gender' and 
